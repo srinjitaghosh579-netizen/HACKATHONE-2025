@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Text Summarizer</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Summarify AI</h2>
+
+  <div class="layout">
+  <div class="left">
+    <textarea id="inputText" placeholder="Write your text here..."></textarea>
+    <br>
+    <select id="summaryType">
+      <option value="short">Short Summary</option>
+      <option value="bullet">Bullet Points</option>
+      <option value="exam">Exam Notes</option>
+    </select>
+    <br>
+    <button onclick="summarize()">Summarize</button>
+  </div>
+
+  <div class="right">
+    <div id="output">
+  <span id="outputTitle">Output</span><br><br>
+<div id="outputText"></div>
+<div id="outputButtons" style="display:none; margin-top: 14px;">
+  <button id="copyBtn" onclick="copyOutput()">Copy</button>
+  <button id="downloadBtn" onclick="downloadOutput()">Download</button>
+</div>
+
+</div>
+
+  </div>
+</div>
+
+
+<script>
+function summarize() {
+  const text = document.getElementById("inputText").value;
+  const type = document.getElementById("summaryType").value;
+  let output = "";
+
+  if (type === "short") {
+    const sentences = text.split(". ");
+    output = sentences.slice(0, 3).join(". ") + ".";
+  }
+
+  if (type === "bullet") {
+    const sentences = text.split(". ");
+    output = sentences.map(s => "• " + s.trim()).join("\n");
+  }
+
+  if (type === "exam") {
+    const sentences = text.split(". ");
+    output = "📌 Key Points:\n" + sentences.map(s => "- " + s.trim()).join("\n");
+  }
+
+  document.getElementById("outputText").innerText = output;   // put summary inside outputText div
+document.getElementById("outputButtons").style.display = "block";  // show copy + download buttons
+
+}
+</script>
+
+</body>
+</html>
